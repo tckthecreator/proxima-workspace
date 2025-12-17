@@ -1,160 +1,99 @@
 # Proxima Workspace — Presence-Driven Virtual Office
 
-Este repositório contém o design e a implementação de uma plataforma de **escritório virtual colaborativo**, com foco em comunicação em tempo real, presença espacial, previsibilidade de comportamento, performance e fácil self-hosting via Docker.
+Proxima Workspace is a presence-driven virtual office focused on spatial interaction, lightweight performance, and self-hosted deployment. The product emphasizes *being somewhere together* rather than simulating a full 3D world.
 
-O projeto é desenhado inicialmente para uso interno em empresas e, posteriormente, para distribuição open source.
-
----
-
-## Objetivos do Projeto
-
-* Escritório virtual com presença espacial (avatars, proximidade, ZoneTypes)
-* Comunicação por áudio/vídeo em tempo real
-* Colaboração síncrona: screen share, whiteboard
-* Escalabilidade progressiva (P2P → TURN → SFU)
-* Self-host simples e padronizado via Docker
-* Documentação como contrato de arquitetura
+This repository’s documentation follows a **strict source-of-truth policy** to avoid conceptual drift and over-documentation.
 
 ---
 
-## Vocabulário Oficial (Congelado)
+## Source of Truth
 
-Os termos abaixo são **normativos**. Toda a base de código e documentação deve utilizá-los exatamente como definidos.
+Only the documents listed below are considered authoritative. All design, implementation, and product decisions must be derived from them.
 
-### ZoneType
+1. **PRODUCT_MODEL.md**
+   Defines *what the product is*: concepts, invariants, user-facing behavior, and product rules.
 
-Contexto funcional declarativo que governa:
+2. **ARCHITECTURE.md**
+   Defines *how the system works*: runtime components, networking, scalability, and deployment model.
 
-* regras de áudio e vídeo
-* ferramentas de colaboração
-* política de conectividade
+3. **WORLD_FORMAT.md**
+   Defines *how the world is described*: spatial data model, zones, objects, doors, and validation rules.
 
-Exemplos: `OpenArea`, `PersonalRoom`, `TeamArea`, `MeetingRoom`, `AFK`
+4. **BUILD_MODE_AND_ASSETS.md**
+   Defines *how worlds are created and customized*: in-browser editor (Build Mode), asset system, and content pipeline.
 
----
-
-### Client
-
-Aplicação executada pelo usuário final.
-
-Inclui:
-
-* renderização do mundo
-* máquina de estados
-* mídia WebRTC
-
-Nunca utilizar termos alternativos como *frontend*, *app* ou *player*.
+No other documents should be treated as sources of truth.
 
 ---
 
-### Signaling Server
+## Recommended Reading Order
 
-Serviço responsável por:
+For first-time readers:
 
-* presença
-* estado
-* troca de mensagens
-* negociação de conexões WebRTC
+1. PRODUCT_MODEL.md
+2. WORLD_FORMAT.md
+3. BUILD_MODE_AND_ASSETS.md
+4. ARCHITECTURE.md
 
-Não transmite mídia.
-
----
-
-### SFU (Selective Forwarding Unit)
-
-Servidor de mídia responsável por receber streams WebRTC e encaminhá-los seletivamente para outros participantes, sem decodificação ou mixagem.
+This order mirrors the product’s mental model: **what → how it’s represented → how it’s built → how it runs**.
 
 ---
 
-## Estrutura de Documentação
+## Frozen Vocabulary
 
-A documentação do projeto é **parte essencial do design** e deve ser lida na ordem abaixo.
+To maintain consistency across documentation and code, the following terms are frozen:
 
-### 1. Visão Geral de Arquitetura
+* **ZoneType** — always referred to as `ZoneType`
+* **Client** — never “frontend” or “app”
+* **Signaling Server** — single canonical name
+* **Build Mode** — editor mode inside the Client
+* **World** — the spatial environment loaded by the Client
+* **Office** — a business-owned World instance
 
-* **ARCHITECTURE_GUIDE.md** — Define arquitetura global, princípios de self-hosting e componentes principais.
-
-### 2. Mundo e Presença
-
-* **WORLD_SYSTEM.md** — Filosofia do mundo virtual e limites conceituais.
-* **SPATIAL_MODEL.md** — Modelo de espaço, proximidade, visibilidade, sharding.
-* **AVATAR_SYSTEM.md** — Definição de avatars, estados e indicadores visuais.
-* **MAP_FORMAT.md** — Formato de mapas, escritórios prontos e customizados.
-
-### 3. Design de Interação
-
-* **INTERACTION_DESIGN.md** — Como usuários se movimentam, interagem e transitam entre contextos.
-
-### 4. Ferramentas de Colaboração
-
-* **COLLABORATION_TOOLS.md** — Screen share, whiteboard, integrações externas e limites de escopo.
-
-### 5. Regras por Zona
-
-* **ZONE_RULES.md** — Regras comportamentais, permissões e políticas de mídia por ZoneType.
-
-### 6. Protocolo de Signaling
-
-* **SIGNALING_PROTOCOL.md** — Contrato de mensagens entre Client e Signaling Server.
-
-### 7. Máquina de Estados do Client
-
-* **CLIENT_STATE_MACHINE.md** — Traduz ZoneTypes e regras em comportamento executável no Client.
-
-### 8. Modos de Falha
-
-* **FAILURE_MODES.md** — Falhas esperadas, degradação graciosa e estratégias de recuperação.
+Avoid introducing synonyms for these terms.
 
 ---
 
-## Princípios Fundamentais
+## Core Principles
 
-* ZoneType governa comportamento
-* Mídia nunca é implícita
-* Performance tem prioridade sobre customização
-* Integração é preferível à reinvenção
-* Docker é o contrato operacional
-
----
-
-## Self-Hosting
-
-Todo o ambiente self-hosted deve ser executado exclusivamente via Docker.
-
-Não há suporte para:
-
-* instalação manual
-* execução direta de binários
-* setups não containerizados
+* 2D / 2.5D spatial world (not full 3D)
+* Presence-first UX
+* Low bandwidth and CPU usage
+* In-browser editing (no native tools)
+* Docker-first and self-host friendly
+* Deterministic collision and interaction rules
+* Avatar customization never affects collision or interaction ranges
+* Movement is client-optimistic and server-corrective
+* Presence is synchronized by Zone, never by World
+* Object interaction conflicts are resolved server-side
+* Product limits are explicit and intentional
+* Moderation is administrative, not spatial
 
 ---
 
-## Contribuições
+## Non-Goals
 
-Este projeto valoriza contribuições que:
+Proxima Workspace explicitly does **not** aim to be:
 
-* respeitem o vocabulário oficial
-* mantenham consistência arquitetural
-* evitem feature creep
-
-Toda nova funcionalidade deve declarar explicitamente:
-
-* ZoneTypes afetados
-* impacto em mídia
-* impacto em performance
+* A full 3D metaverse
+* A game engine
+* A photorealistic environment
+* An art-heavy or hardware-intensive platform
 
 ---
 
-## Status do Projeto
+## Contribution Guidance
 
-* Design: consolidado
-* Documentação: estruturante
-* Implementação: em progresso
+When proposing changes:
+
+* Identify which source-of-truth document is affected
+* Update that document first
+* Avoid creating new standalone concept documents
+
+If a concept does not clearly belong to one of the four documents, it likely needs refinement.
 
 ---
 
-## Nota Final
+## License
 
-Este repositório trata documentação como **fonte da verdade**.
-
-Código que viola decisões documentadas deve ser considerado incorreto por definição.
+TBD
