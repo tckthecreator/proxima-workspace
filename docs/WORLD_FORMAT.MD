@@ -124,7 +124,7 @@ Zones define **behavioral context**.
 * No visual inference
 * Only allowed overlap:
 
-  * `PersonalRoom` inside `TeamArea`
+  * `PrivateRoom` inside `TeamArea`
 
 ---
 

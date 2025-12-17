@@ -10,7 +10,7 @@ This is the primary source of truth for product decisions.
 
 * WORLD_FORMAT.md
 * BUILD_MODE_AND_ASSETS.md
-* RUNTIME_BEHAVIOR.md
+* ARCHITECTURE.md
 
 ---
 

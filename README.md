@@ -10,6 +10,8 @@ This repository’s documentation follows a **strict source-of-truth policy** to
 
 Only the documents listed below are considered authoritative. All design, implementation, and product decisions must be derived from them.
 
+### Core Documents
+
 1. **PRODUCT_MODEL.md**
    Defines *what the product is*: concepts, invariants, user-facing behavior, and product rules.
 
@@ -21,6 +23,26 @@ Only the documents listed below are considered authoritative. All design, implem
 
 4. **BUILD_MODE_AND_ASSETS.md**
    Defines *how worlds are created and customized*: in-browser editor (Build Mode), asset system, and content pipeline.
+
+### Implementation Documents
+
+5. **SIGNALING_PROTOCOL.md**
+   Defines the signaling protocol: message formats, WebRTC coordination, and communication patterns.
+
+6. **CLIENT_STATE_MACHINE.md**
+   Defines client state management: state transitions, media handling, and zone transitions.
+
+7. **FAILURE_MODES.md**
+   Defines error handling: failure scenarios, recovery strategies, and degradation policies.
+
+8. **SECURITY_MODEL.md**
+   Defines security: authentication, authorization, token management, and workspace isolation.
+
+9. **DATA_MODELS.md**
+   Defines data structures: database schemas, API data structures, and session management.
+
+10. **CONFIGURATION.md**
+    Defines configuration: component settings, environment variables, and deployment configs.
 
 No other documents should be treated as sources of truth.
 
@@ -35,7 +57,16 @@ For first-time readers:
 3. BUILD_MODE_AND_ASSETS.md
 4. ARCHITECTURE.md
 
-This order mirrors the product’s mental model: **what → how it’s represented → how it’s built → how it runs**.
+This order mirrors the product's mental model: **what → how it's represented → how it's built → how it runs**.
+
+For implementers, continue with:
+
+5. SIGNALING_PROTOCOL.md
+6. CLIENT_STATE_MACHINE.md
+7. SECURITY_MODEL.md
+8. DATA_MODELS.md
+9. CONFIGURATION.md
+10. FAILURE_MODES.md
 
 ---
 
